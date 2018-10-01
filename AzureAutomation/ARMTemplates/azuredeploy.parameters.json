@@ -9,8 +9,7 @@
         "value": "labadmin"
       },
       "adminPassword": {
-        "value": "Pa55w.rd
-        12345"
+        "value": "Pa55w.rd12345"
       },
       "dnsNameforLBIP": {
         "value": "tagosystem01"
