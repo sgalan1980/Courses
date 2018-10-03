@@ -45,8 +45,8 @@
       "subnetPrefix": "10.0.0.0/24",
       "addressPrefix": "10.0.0.0/16",
       "lbid": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
-
-      
+      "numberOfInstances": 2
+     
       
     },
     "resources": [
@@ -118,6 +118,11 @@
                             "loadBalancerBackendAddressPools": [
                                 {
                                     "id": "[concat(variables('lbid'), '/backendAddressPools/BackendPool1')]"
+                                }
+                            ],
+                            "loadBalancerInboundNatRules": [
+                                {
+                                    "id": "[concat(variables('lbID'),'/inboundNatRules/RDP-VM', copyindex())]"
                                 }
                             ]
                         }
