@@ -27,6 +27,13 @@
             "metadata": {
                 "Descripcion": "VNET Name"
             }
+        },
+        "lbName": {
+            "type": "string",
+            "defaultValue": "myLB",
+            "metadata": {
+                "description": "Load Balancer name"
+            }
         }
         
     },
@@ -36,7 +43,8 @@
       "publicIPAddressType": "Dynamic",
       "subnetName": "Subnet-1",
       "subnetPrefix": "10.0.0.0/24",
-      "addressPrefix": "10.0.0.0/16"
+      "addressPrefix": "10.0.0.0/16",
+      "lbid": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
 
       
       
@@ -80,6 +88,38 @@
                         "name": "[variables('subnetName')]",
                         "properties":{
                             "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('nicNamePrefix'), copyindex()]",
+            "location":"West Europe",
+            "copy": {
+                "name": "nicloop",
+                "count": "[variables('numberOfInstances')]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+                "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+            ],
+            "properties": {
+                "ipConfigurations":[
+                    {
+                        "name": "ipconfig1",
+                        "properties":{
+                            "privateIPAllocationMethod":"Dynamic",
+                            "subnet":{
+                                "id": "[variables('subnetref')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(variables('lbid'), '/backendAddressPools/BackendPool1')]"
+                                }
+                            ]
                         }
                     }
                 ]
