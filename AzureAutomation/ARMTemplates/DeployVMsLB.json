@@ -2,11 +2,29 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "StorageAccountName": {
+            "type": "string",
+            "metadata": {
+                "Description": "Nombre de la Storage Account"
+            }
+        }
     },
     "variables": {
-      "comment": "Plantilla Estandar"
+      "comment": "Plantilla Estandar",
+      "storageAccountType": "Standard_LRS"
+      
+      
     },
     "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('storageAccountName')]",
+            "apiVersion": "2015-05-01-preview",
+            "location":"West Europe",
+            "properties": {
+                "accountType": "[variables('storageAccountType')]"
+            }
+        }
     ],
     "outputs": {
     }

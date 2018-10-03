@@ -4,15 +4,7 @@
     "parameters": {
       "storageAccountName": {
         "value": "stg02"
-      },
-      "adminUsername": {
-        "value": "labadmin"
-      },
-      "adminPassword": {
-        "value": "Pa55w.rd12345"
-      },
-      "dnsNameforLBIP": {
-        "value": "tagosystem01"
       }
+            
     }
   }
