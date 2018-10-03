@@ -7,22 +7,82 @@
             "metadata": {
                 "Description": "Nombre de la Storage Account"
             }
+        },
+        "publicIPAddressName":{
+            "type": "string",
+            "defaultValue": "myPublicIP01",
+            "metadata": {
+                "Description": "Load Balancer Name"
+            }
+        },
+        "dnsNameforLBIP":{
+            "type": "string",
+            "metadata": {
+                "Description": "DNS por el balanceador IP"
+            }
+        },
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "VNet2",
+            "metadata": {
+                "Descripcion": "VNET Name"
+            }
         }
+        
     },
     "variables": {
       "comment": "Plantilla Estandar",
-      "storageAccountType": "Standard_LRS"
+      "storageAccountType": "Standard_LRS",
+      "publicIPAddressType": "Dynamic",
+      "subnetName": "Subnet-1",
+      "subnetPrefix": "10.0.0.0/24",
+      "addressPrefix": "10.0.0.0/16"
+
       
       
     },
     "resources": [
         {
+            "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[parameters('storageAccountName')]",
-            "apiVersion": "2015-05-01-preview",
             "location":"West Europe",
             "properties": {
                 "accountType": "[variables('storageAccountType')]"
+            }
+        },
+        {
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddressName')]",
+            "location":"West Europe",
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+                "dnsSettings":{
+                    "domainNameLabel": "[parameters('dnsNameforLBIP')]"
+                }
+            }
+        
+        },
+        {
+            "apiVersion": "2017-06-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('vnetName')]",
+            "location": "West Europe",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes":[
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets":[
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties":{
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
             }
         }
     ],

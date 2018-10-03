@@ -4,6 +4,9 @@
     "parameters": {
       "storageAccountName": {
         "value": "stg02"
+      },
+      "dnsNameforLBIP":{
+        "value": "TagoSystem01"
       }
             
     }
