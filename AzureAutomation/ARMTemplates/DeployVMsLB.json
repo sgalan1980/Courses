@@ -60,6 +60,20 @@
             "metadata": {
                 "Descripcion": "Pass"
             }
+        },
+        "vmSize":{
+            "type": "string",
+            "defaultValue": "Standard_D1",
+            "metadata": {
+                "Descripcion": "Size"
+            }
+        },
+        "sku":{
+            "type": "string",
+            "defaultValue": "Aligned",
+            "metadata": {
+                "Description": "Alineamiento de discos en grupo disponibilidad"
+            }
         }
  
         
@@ -83,17 +97,7 @@
       
     },
     "resources": [
-        {
-            "type": "Microsoft.Compute/availabilitySets",
-            "name": "[variables('availabilitySetName')]",
-            "apiVersion": "2016-04-30-preview",
-            "location": "West Europe",
-            "properties": {
-              "platformFaultDomainCount": 2,
-              "platformUpdateDomainCount": 3,
-              "managed": true
-            }
-        },
+        
         {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Storage/storageAccounts",
@@ -102,6 +106,21 @@
             "properties": {
                 "accountType": "[variables('storageAccountType')]"
             }
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[variables('availabilitySetName')]",
+            "apiVersion": "2017-12-01",
+            "location": "West Europe",
+            "properties": {
+              "platformFaultDomainCount": 2,
+              "platformUpdateDomainCount": 3
+              
+            },
+            "sku":{
+                "name": "[parameters('sku')]"
+            }
+            
         },
         {
             "apiVersion": "2015-05-01-preview",
@@ -279,7 +298,7 @@
             ],
             "properties":{
                 "hardwareProfile":{
-                    "vmSize":"Basic_A0"
+                    "vmSize":"Standard_B1s"
                 },
                 "availabilitySet":{
                     "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
@@ -299,17 +318,23 @@
                     "osDisk":{
                         "createOption":"FromImage"
                         }
-                    }
-                },
+                    },
                 "networkProfile":{
                     "networkInterfaces":[
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicNamePrefix'),copyindex()))]"
                         }
                     ]
+                    
                 }
-                
+            }
          }
+                
+
+                
+                             
+                
+         
 
         
     ],
