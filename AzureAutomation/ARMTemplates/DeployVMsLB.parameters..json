@@ -7,6 +7,12 @@
       },
       "dnsNameforLBIP":{
         "value": "tagosystem01"
+      },
+      "adminUsername":{
+        "value": "sgalan"
+      },
+      "adminPassword":{
+        "value": "mlbfdlcds2K18"
       }
             
     }
