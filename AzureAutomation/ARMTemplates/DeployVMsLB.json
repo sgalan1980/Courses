@@ -63,7 +63,7 @@
         },
         "AvGName":{
             "type": "string",
-            "defaultValue": "AvgSet01",
+            "defaultValue": "avbset01",
             "metadata": {
                 "Descripcion": "Nombre AvailableSetGroup"
             }
@@ -95,6 +95,7 @@
       "subnetref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables ('subnetName'))]",
       "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
       "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]"
+      
       
     },
     "resources": [
@@ -139,6 +140,21 @@
                         }
                     }
                 ]
+            }
+        },
+        {
+            "apiVersion": "2016-04-30-preview",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('AvGName')]",
+            "location":"West Europe",
+            "properties":{
+                "platformFaultDomainCount": "[parameters('FaultDomains')]",
+                "platformUpdateDomainCount": "[parameters('updateDomains')]",
+                "managed":true
+                
+            },
+            "sku":{
+                "name": "[parameters('AvgSku')]"
             }
         },
         {
@@ -265,20 +281,7 @@
                 ]
             }
         },
-        {
-            "apiVersion": "2016-04-30-preview",
-            "type": "Microsoft.Compute/availabilitySets",
-            "name": "[parameters('AvGName')]",
-            "location":"West Europe",
-            "properties":{
-                "platformFaultDomainCount": "[parameters('FaultDomains')]",
-                "platformUpdateDomainCount": "[parameters('updateDomains')]"
-                
-            },
-            "sku":{
-                "name": "[parameters('AvgSku')]"
-            }
-        },
+        
 
         {
             "apiVersion": "2016-04-30-preview",
@@ -292,7 +295,7 @@
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]",
-                "[concat('Microsoft.Compute/availabilitySets/', parameters('AvGName'), copyindex())]"
+                "[concat('Microsoft.Compute/availabilitySets/', parameters('AvGName')]"
             ],
             "properties":{
                 "hardwareProfile":{
