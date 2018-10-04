@@ -60,8 +60,26 @@
             "metadata": {
                 "Descripcion": "Pass"
             }
+        },
+        "AvGName":{
+            "type": "string",
+            "defaultValue": "AvgSet01",
+            "metadata": {
+                "Descripcion": "Nombre AvailableSetGroup"
+            }
+        },
+        "FaultDomains":{
+            "type": "int",
+            "defaultValue": 2
+        },
+        "updateDomains":{
+            "type": "int",
+            "defaultValue": 3
+        },
+        "AvgSku":{
+            "type": "string",
+            "defaultValue": "Aligned"
         }
-        
     },
     "variables": {
       "comment": "Plantilla Estandar",
@@ -249,6 +267,21 @@
         },
         {
             "apiVersion": "2016-04-30-preview",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('AvGName')]",
+            "location":"West Europe",
+            "properties":{
+                "platformFaultDomainCount": "[parameters('FaultDomains')]",
+                "platformUpdateDomainCount": "[parameters('updateDomains')]"
+                
+            },
+            "sku":{
+                "name": "[parameters('AvgSku')]"
+            }
+        },
+
+        {
+            "apiVersion": "2016-04-30-preview",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[concat(parameters('vmNamePrefix'), copyindex())]",
             "copy": {
@@ -258,11 +291,15 @@
             "location":"West Europe",
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]",
+                "[concat('Microsoft.Compute/availabilitySets/', parameters('AvGName'), copyindex())]"
             ],
             "properties":{
                 "hardwareProfile":{
                     "vmSize":"Basic_A0"
+                },
+                "availabilitySet":{
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
                 },
                 "osProfile":{
                     "computerName": "[concat(parameters('vmNamePrefix'), copyIndex())]",
@@ -278,6 +315,7 @@
                     },
                     "osDisk":{
                         "createOption":"FromImage"
+                        }
                     }
                 },
                 "networkProfile":{
@@ -288,9 +326,9 @@
                     ]
                 }
                 
-            }
+         }
 
-        }
+        
     ],
     "outputs": {
     }
