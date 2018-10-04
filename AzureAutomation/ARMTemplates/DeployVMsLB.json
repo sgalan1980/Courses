@@ -60,28 +60,12 @@
             "metadata": {
                 "Descripcion": "Pass"
             }
-        },
-        "AvGName":{
-            "type": "string",
-            "defaultValue": "avbset01",
-            "metadata": {
-                "Descripcion": "Nombre AvailableSetGroup"
-            }
-        },
-        "FaultDomains":{
-            "type": "int",
-            "defaultValue": 2
-        },
-        "updateDomains":{
-            "type": "int",
-            "defaultValue": 3
-        },
-        "AvgSku":{
-            "type": "string",
-            "defaultValue": "Aligned"
         }
+ 
+        
     },
     "variables": {
+      "availabilitySetName": "myAvSet",
       "comment": "Plantilla Estandar",
       "storageAccountType": "Standard_LRS",
       "subnetName": "Subnet-1",
@@ -99,6 +83,17 @@
       
     },
     "resources": [
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[variables('availabilitySetName')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "West Europe",
+            "properties": {
+              "platformFaultDomainCount": 2,
+              "platformUpdateDomainCount": 3,
+              "managed": true
+            }
+        },
         {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Storage/storageAccounts",
@@ -142,21 +137,7 @@
                 ]
             }
         },
-        {
-            "apiVersion": "2016-04-30-preview",
-            "type": "Microsoft.Compute/availabilitySets",
-            "name": "[parameters('AvGName')]",
-            "location":"West Europe",
-            "properties":{
-                "platformFaultDomainCount": "[parameters('FaultDomains')]",
-                "platformUpdateDomainCount": "[parameters('updateDomains')]",
-                "managed":true
-                
-            },
-            "sku":{
-                "name": "[parameters('AvgSku')]"
-            }
-        },
+        
         {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/networkInterfaces",
@@ -281,8 +262,6 @@
                 ]
             }
         },
-        
-
         {
             "apiVersion": "2016-04-30-preview",
             "type": "Microsoft.Compute/virtualMachines",
@@ -294,15 +273,16 @@
             "location":"West Europe",
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]",
-                "[concat('Microsoft.Compute/availabilitySets/', parameters('AvGName')]"
+                "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]"
+                
             ],
             "properties":{
                 "hardwareProfile":{
                     "vmSize":"Basic_A0"
                 },
                 "availabilitySet":{
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
                 },
                 "osProfile":{
                     "computerName": "[concat(parameters('vmNamePrefix'), copyIndex())]",
