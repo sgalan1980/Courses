@@ -280,8 +280,7 @@
         "dependsOn": [
           "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
           "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]"
-          
-        ],
+          ],
         "properties": {
           "hardwareProfile": {
             "vmSize": "[parameters('vmSize')]"

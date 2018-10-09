@@ -1,0 +1,1 @@
+$c = Get-AutomationConnection -Name 'AzureRunAsConnection' Add-AzureRmAccount -ServicePrincipal -Tenant $c.TenantID -ApplicationID $c.ApplicationID -CertificateThumbprint $c.CertificateThumbprint 
