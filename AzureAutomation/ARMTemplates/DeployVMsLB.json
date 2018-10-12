@@ -63,7 +63,7 @@
         },
         "vmSize":{
             "type": "string",
-            "defaultValue": "Standard_D1",
+            "defaultValue": "Standard_B1S",
             "metadata": {
                 "Descripcion": "Size"
             }

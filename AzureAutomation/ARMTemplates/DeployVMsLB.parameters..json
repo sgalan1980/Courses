@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storageAccountName": {
-        "value": "stg02"
+        "value": "rg01stg02"
       },
       "dnsNameforLBIP":{
         "value": "tagosystem01"
