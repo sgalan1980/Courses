@@ -299,6 +299,7 @@
             "properties":{
                 "hardwareProfile":{
                     "vmSize":"Standard_B1s"
+                    
                 },
                 "availabilitySet":{
                     "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
@@ -307,6 +308,7 @@
                     "computerName": "[concat(parameters('vmNamePrefix'), copyIndex())]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]"
+                    
                 },
                 "storageProfile": {
                     "imageReference":{
@@ -314,9 +316,15 @@
                         "offer": "WindowsServer",
                         "sku": "2012-R2-Datacenter",
                         "version": "latest"
+                        
                     },
                     "osDisk":{
-                        "createOption":"FromImage"
+                        "createOption":"FromImage",
+                        "managedDisk":{
+                            "storageAccountType":"Standard_LRS"
+                        
+                        }
+                          
                         }
                     },
                 "networkProfile":{
