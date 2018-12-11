@@ -13,8 +13,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>NOMBRE=&quot;Santiago&quot;
-echo &quot;Hola, $Nombre. La fecha es $(date +%F)&quot; &gt; /tmp/nombre</command>
+      <command>NOMBRE=Santiago
+APELLIDO=Galan
+
+/opt/scriptv2.sh $NOMBRE $APELLIDO</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
