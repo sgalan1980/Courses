@@ -1,0 +1,5 @@
+- hosts: test1
+  task:
+
+    - shell: echo Hola Mundo > /tmp/hola-ansible
+    
