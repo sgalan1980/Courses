@@ -7,10 +7,10 @@ RUN useradd remote_user && \
 RUN mkdir /home/remote_user/.ssh/ && \ 
     chmod 700 /home/remote_user/.ssh/
     
-
 COPY remote-key.pub /home/remote_user/.ssh/authorized.keys
+#RUN cat //e/github/repositorios/courses/jenkins/centos7/remote-key.pub > /home/remote_user/.ssh/authorized.keys
 
-RUN chown remote_user:remote_user    -R /home/remote_user/.ssh && \
+RUN chown remote_user:remote_user -R /home/remote_user/.ssh && \
     chmod 600 /home/remote_user/.ssh/authorized.keys
 
 RUN /usr/sbin/sshd-keygen > /dev/null 2>&1
