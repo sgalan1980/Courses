@@ -2,9 +2,11 @@ version: '3'
 services:
   jenkins:
     container_name: jenkins
-    image: jenkins/jenkins
+    image: jenkins-ansible
+    build:
+      context: E:\Github\Repositorios\Courses\Jenkins\jenkins_ansible
     ports:
-      - "8080:8080"
+      - "8085:8080"
     volumes:
       - //E/docker/jenkins_home:/var/jenkins_home
     networks: 
@@ -14,6 +16,17 @@ services:
     image: remote-host
     build:
       context: E:\Github\Repositorios\Courses\Jenkins\centos7
+    volumes:
+      - //E/docker/remote_host/script.sh:/tmp/script.sh
+    networks:
+      - net
+  db_host:
+    container_name: db_host
+    image: mysql:5.7
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes:
+      - //E/docker/db_host:/var/lib/mysql
     networks:
       - net
 networks: 
