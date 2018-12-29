@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - //E/Github/Repositorios/Courses/Jenkins/Jenkins_home2:/var/jenkins_home
+      - //E/docker/jenkins_home:/var/jenkins_home
     networks: 
       - net
   remote_host:

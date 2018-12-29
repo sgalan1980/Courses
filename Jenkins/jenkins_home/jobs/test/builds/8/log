@@ -1,9 +1,0 @@
-Started by user [8mha:////4FFSHpCsDsxhvafRgjF9p1h0TL9dTpcd/MUCtAvy3ibVAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9xJTczDwAj6GcLcAAAAA=[0madmin
-Building in workspace /var/jenkins_home/workspace/test
-[test] $ /bin/sh -xe /tmp/jenkins7001341451436233471.sh
-+ NOMBRE=Santiago
-+ APELLIDO=Galan
-+ /opt/scriptv2.sh Santiago Galan
-/opt/scriptv2.sh: 1: /opt/scriptv2.sh: : not found
-Hola, Santiago Galan
-Finished: SUCCESS
