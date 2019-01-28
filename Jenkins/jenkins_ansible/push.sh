@@ -1,5 +1,4 @@
 #!/bin/bash
-
 counter=0
 
 while [ $counter -lt 50 ]; do
