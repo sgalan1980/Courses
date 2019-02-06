@@ -24,7 +24,7 @@ services:
     container_name: db_host
     image: mysql:5.7
     environment: 
-      - "MYSQL_ROOT_PASSWORD=1234"
+      - MYSQL_ROOT_PASSWORD= "1234"
     volumes:
       - //E/docker/db_host:/var/lib/mysql
     networks:
