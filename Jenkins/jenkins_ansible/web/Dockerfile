@@ -27,6 +27,9 @@ VOLUME /var/www/html /var/log/nginx /var/log/php-fpm /var/lib/php-fpm
 
 RUN setfacl -R -m u:remote_user:rwx /var/www/html
 
+# Esta línea la he añadido yo para dar permisos de escritura sobre esta carpeta a remote_user
+RUN chown remote_user:remote_user /var/www/html -R
+
 COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY ./bin/start.sh /start.sh
