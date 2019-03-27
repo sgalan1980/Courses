@@ -35,7 +35,7 @@ services:
     build:
       context: E:\Github\Repositorios\Courses\Jenkins\jenkins_ansible\web
     ports:
-      - "88:88"
+      - "8888:80"
     networks:
       - net
   git:
@@ -49,6 +49,7 @@ services:
       - //E/docker/git_server/logs:/var/log/gitlab
       - //E/docker/git_server/data:/var/opt
     image: gitlab/gitlab-ce
+    restart: always
     networks:
       - net
 networks: 
